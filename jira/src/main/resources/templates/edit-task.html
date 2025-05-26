@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Edit Task</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="container mt-5">
+            <h1 class="text-center">Edit Task</h1>
+            <div class="card card-body shadow mt-4">
+                <form th:action="@{/tasks/edit/{id}(id=${task.id})}" th:object="${task}" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Task Title:</label>
+                        <input type="text" id="title" th:field="*{title}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" th:field="*{description}" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status:</label>
+                        <select id="status" th:field="*{status}" class="form-select" required>
+                            <option th:each="status : ${allStatuses}" 
+                                    th:value="${status.displayName}" 
+                                    th:text="${status.displayName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="storyPoints" class="form-label">Story Points:</label>
+                        <select id="storyPoints" th:field="*{storyPoints}" class="form-select" required>
+                            <option value="1">1 (Low Priority - Green)</option>
+                            <option value="2">2</option>
+                            <option value="3">3 (Medium Priority - Blue)</option>
+                            <option value="5">5</option>
+                            <option value="8">8 (High Priority - Yellow)</option>
+                            <option value="13">13</option>
+                            <option value="21">21 (Critical Priority - Red)</option>
+                        </select>
+                        <small class="form-text text-muted">The task bar will be colored based on priority: Green (Low), Blue (Medium), Yellow (High), Red (Critical).</small>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Update Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
